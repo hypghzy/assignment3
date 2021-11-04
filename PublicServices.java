@@ -41,15 +41,17 @@ public class PublicServices {
       ++port;
 
       int fileNum = 0;
-      String fileName = "TestResults_" + fileNum;
+      String fileName = "TestResults_" + fileNum + ".txt";
       File results = null;
       Timestamp startTimestamp = null;
       Timestamp endTimestamp = null;
 
       results = new File(fileName);
-      results.createNewFile();
-      // Keep waiting for connection until the program terminated
-      while (true) {
+      while (results.createNewFile()) {
+        ++fileNum;
+        fileName = "TestResults_" + fileName + ".txt";
+      }
+      while (true) { // Keep waiting for connection until the program terminated
         String replyString = "1";
         // System.out.println(LocalTime.now() + " - Waiting for server...");
         Socket server = null;
