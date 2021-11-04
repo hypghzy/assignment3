@@ -7,12 +7,12 @@
  * @LastEditors: Yupeng Hou
 -->
 
-TestOne:
-` java PublicServices & 
-acceporNum 
-for (; acceptorNum < 500; ++acceptorNum){ 
-  java Acceptor & 
-  java Proposer acceptorNum 
+TestOne:  
+` java PublicServices &  
+acceporNum  
+for (; acceptorNum < 500; ++acceptorNum){  
+  java Acceptor &  
+  java Proposer acceptorNum  
 }`
 
 Presets:
