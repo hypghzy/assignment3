@@ -47,9 +47,10 @@ public class PublicServices {
       Timestamp endTimestamp = null;
 
       results = new File(fileName);
-      while (results.createNewFile()) {
+      while (!results.createNewFile()) {
         ++fileNum;
-        fileName = "TestResults_" + fileName + ".txt";
+        fileName = "TestResults_" + fileNum + ".txt";
+        results = new File(fileName);
       }
       while (true) { // Keep waiting for connection until the program terminated
         String replyString = "1";
