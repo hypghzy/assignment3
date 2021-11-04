@@ -25,11 +25,14 @@ public class Proposer {
   public static void main(String[] args) {
     byte[] byteBuffer4 = new byte[4];
     byte[] byteBuffer1 = new byte[1];
+    value = 0;
     boolean consensusReached = false;
     acceptorNum = Integer.parseInt(args[0]);
     // acceptorNum = 4;
     majority = acceptorNum / 2 + 1;
-    value = Integer.parseInt(args[1]);
+    if (args.length > 1) {
+      value = Integer.parseInt(args[1]);
+    }
     // value = 10;
     // System.out.printf(
     //   LocalTime.now() + " - Total have %d acceptors the value is %d.\n",
