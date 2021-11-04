@@ -34,10 +34,10 @@ public class PublicServices {
     ServerSocket proposeServer = null;
     try {
       proposeServer = new ServerSocket(port);
-      // System.out.printf(
-      //   "=== Public service server on port %d started. ===\n",
-      //   port
-      // );
+      System.out.printf(
+        "=== Public service server on port %d started. ===\n",
+        port
+      );
       ++port;
 
       int fileNum = 0;
@@ -140,9 +140,9 @@ public class PublicServices {
                   Integer.parseInt(
                     new String(byteBuffer4, StandardCharsets.UTF_8)
                   );
-                // System.out.println(
-                //   LocalTime.now() + " - The final value is " + value
-                // );
+                System.out.println(
+                  LocalTime.now() + " - The final value is " + value
+                );
                 endTimestamp = new Timestamp(System.currentTimeMillis());
                 Files.writeString(
                   Paths.get(fileName),
@@ -183,6 +183,10 @@ public class PublicServices {
               }
               // break the loop if the operation is succeeded.
               break;
+            } else {
+              if (request == 0) {
+                --numAcceptor;
+              }
             }
           }
           // Reply with 1 as acknowledgement
