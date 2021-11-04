@@ -118,7 +118,7 @@ public class Proposer {
         10,
         10,
         TimeUnit.SECONDS,
-        new ArrayBlockingQueue<>(50)
+        new ArrayBlockingQueue<>(500)
       );
       Iterator<Integer> portsIterator = results.keySet().iterator();
 
@@ -127,7 +127,7 @@ public class Proposer {
         try {
           TimeUnit.SECONDS.sleep(1);
         } catch (Exception e) {
-          // System.out.println(e);
+          System.err.println(e);
         }
       }
 
