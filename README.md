@@ -8,7 +8,12 @@
 -->
 
 TestOne:
-` java PublicServices & acceporNum for (; acceptorNum < 500; ++acceptorNum){ java Acceptor & java Proposer acceptorNum }`
+` java PublicServices & 
+acceporNum 
+for (; acceptorNum < 500; ++acceptorNum){ 
+  java Acceptor & 
+  java Proposer acceptorNum 
+}`
 
 Presets:
 
