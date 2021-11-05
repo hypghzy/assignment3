@@ -9,7 +9,11 @@
 
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -27,12 +31,26 @@ public class Proposer {
     byte[] byteBuffer1 = new byte[1];
     value = 0;
     boolean consensusReached = false;
+
+    // What until the time
+    LocalTime current = LocalTime.now();
+    LocalTime until = LocalTime.parse(
+      args[1],
+      DateTimeFormatter.ofPattern("HH:mm:ss")
+    );
+    long timeGap = ChronoUnit.SECONDS.between(current, until);
+    try {
+      TimeUnit.SECONDS.sleep(timeGap);
+    } catch (Exception e) {
+      System.err.println(e);
+    }
+
     acceptorNum = Integer.parseInt(args[0]);
     // acceptorNum = 4;
     majority = acceptorNum / 2 + 1;
-    if (args.length > 1) {
-      value = Integer.parseInt(args[1]);
-    }
+    // if (args.length > 1) {
+    //   value = Integer.parseInt(args[1]);
+    // }
     // value = 10;
     // System.out.printf(
     //   LocalTime.now() + " - Total have %d acceptors the value is %d.\n",
