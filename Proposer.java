@@ -34,13 +34,15 @@ public class Proposer {
 
     // What until the time
     LocalTime current = LocalTime.now();
+    System.out.println(current);
     LocalTime until = LocalTime.parse(
       args[1],
-      DateTimeFormatter.ofPattern("HH:mm:ss")
+      DateTimeFormatter.ofPattern("HH:mm:ss.SSS")
     );
-    long timeGap = ChronoUnit.SECONDS.between(current, until);
+    long timeGap = ChronoUnit.MILLIS.between(current, until);
+    System.out.println(timeGap);
     try {
-      TimeUnit.SECONDS.sleep(timeGap);
+      TimeUnit.MILLISECONDS.sleep(timeGap);
     } catch (Exception e) {
       System.err.println(e);
     }
