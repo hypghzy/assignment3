@@ -29,7 +29,7 @@ for j in {1..6}; do
             java Acceptor 2 &
             ;;
         esac
-        echo Acceptor $n
+        # echo Acceptor $n
     done
     process_id=0
     if test $j -gt 1; then
