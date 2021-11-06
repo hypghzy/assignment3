@@ -263,5 +263,6 @@ public class Proposer {
         continue;
       }
     }
+    System.exit(0);
   }
 }

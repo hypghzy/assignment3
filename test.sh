@@ -10,6 +10,7 @@
 #!/bin/bash
 
 echo "Start testing"
+java PublicServices
 timeArray=(0 0 0 0 0)
 
 for j in {1..6}; do
