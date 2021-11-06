@@ -31,19 +31,19 @@ public class Proposer {
     boolean consensusReached = false;
 
     // What until the time
-    LocalTime current = LocalTime.now();
-    // System.out.println(current);
-    LocalTime until = LocalTime.parse(
-      args[1],
-      DateTimeFormatter.ofPattern("HH:mm:ss.SSS")
-    );
-    long timeGap = ChronoUnit.MILLIS.between(current, until);
-    // System.out.println(timeGap);
-    try {
-      TimeUnit.MILLISECONDS.sleep(timeGap);
-    } catch (Exception e) {
-      System.err.println(e);
-    }
+    // LocalTime current = LocalTime.now();
+    // // System.out.println(current);
+    // LocalTime until = LocalTime.parse(
+    //   args[1],
+    //   DateTimeFormatter.ofPattern("HH:mm:ss.SSS")
+    // );
+    // long timeGap = ChronoUnit.MILLIS.between(current, until);
+    // // System.out.println(timeGap);
+    // try {
+    //   TimeUnit.MILLISECONDS.sleep(timeGap);
+    // } catch (Exception e) {
+    //   System.err.println(e);
+    // }
 
     acceptorNum = Integer.parseInt(args[0]);
     // acceptorNum = 4;
@@ -64,24 +64,24 @@ public class Proposer {
       // Ask for propose id
       try {
         Socket publicServices = new Socket("localhost", 8080);
-        // System.out.println(
-        //   LocalTime.now() + " - Asking for propose ID from public services..."
-        // );
+        System.out.println(
+          LocalTime.now() + " - Asking for propose ID from public services..."
+        );
         publicServices.getOutputStream().write("1".getBytes());
         publicServices.getOutputStream().flush();
         publicServices.getInputStream().read(byteBuffer4);
         id = Integer.parseInt(new String(byteBuffer4, StandardCharsets.UTF_8));
         if (id == 0) {
           consensusReached = true;
-          // System.out.println(
-          //   LocalTime.now() + " - Consensus has reached, stop now."
-          // );
+          System.out.println(
+            LocalTime.now() + " - Consensus has reached, stop now."
+          );
           continue;
         } else {
-          // System.out.printf(
-          //   LocalTime.now() + " - Assigned propose Id is %d.\n",
-          //   id
-          // );
+          System.out.printf(
+            LocalTime.now() + " - Assigned propose Id is %d.\n",
+            id
+          );
         }
         publicServices.getOutputStream().write("1".getBytes());
         publicServices.getOutputStream().flush();
@@ -92,31 +92,31 @@ public class Proposer {
       }
 
       // Prepare
-      // System.out.println("\n====== Preparing ======");
+      System.out.println("\n====== Preparing ======");
       try {
         // Acquire acceptors list
         Socket publicServices = new Socket("localhost", 8080);
-        // System.out.println(
-        //   LocalTime.now() + " - Asking for ports of acceptors..."
-        // );
+        System.out.println(
+          LocalTime.now() + " - Asking for ports of acceptors..."
+        );
         publicServices.getOutputStream().write("2".getBytes());
         publicServices.getOutputStream().flush();
         publicServices.getInputStream().read(byteBuffer4);
         int acceptorListNum = Integer.parseInt(
           new String(byteBuffer4, StandardCharsets.UTF_8)
         );
-        // System.out.printf(
-        //   LocalTime.now() + " - Total %d ports on the list.\n",
-        //   acceptorListNum
-        // );
+        System.out.printf(
+          LocalTime.now() + " - Total %d ports on the list.\n",
+          acceptorListNum
+        );
 
         // store the list and reply
         byte[] byteBufferS = new byte[acceptorListNum * 5];
         publicServices.getInputStream().read(byteBufferS);
         String portList = new String(byteBufferS, StandardCharsets.UTF_8);
-        // System.out.println(
-        //   LocalTime.now() + " - Acceptors' ports: " + portList
-        // );
+        System.out.println(
+          LocalTime.now() + " - Acceptors' ports: " + portList
+        );
         publicServices.getOutputStream().write("1".getBytes());
         publicServices.getOutputStream().flush();
         publicServices.getInputStream().read();
@@ -140,7 +140,7 @@ public class Proposer {
       );
       Iterator<Integer> portsIterator = results.keySet().iterator();
 
-      while (successfulConnection < majority && portsIterator.hasNext()) {
+      while (successfulConnection < acceptorNum && portsIterator.hasNext()) {
         threadPoolExecutor.execute(new Operation_Prepare(portsIterator.next()));
         try {
           TimeUnit.SECONDS.sleep(1);
@@ -173,15 +173,16 @@ public class Proposer {
       threadPoolExecutor.shutdown();
 
       if (received < majority) {
-        // System.out.println(
-        //   LocalTime.now() +
-        //   " - Not enough promises collected, try again now.\n====================================================================\n"
-        // );
+        System.out.println(received + " promises collected.");
+        System.out.println(
+          LocalTime.now() +
+          " - Not enough promises collected, try again now.\n====================================================================\n"
+        );
         continue;
       }
 
       // Propose
-      // System.out.println("\n====== Proposing ======");
+      System.out.println("\n====== Proposing ======");
 
       ThreadPoolExecutor threadPoolExecutor2 = new ThreadPoolExecutor(
         10,
@@ -201,7 +202,7 @@ public class Proposer {
           try {
             TimeUnit.SECONDS.sleep(1);
           } catch (Exception e) {
-            // System.out.println(e);
+            System.err.println(e);
           }
         }
       }
@@ -216,12 +217,12 @@ public class Proposer {
             // Tell public services the value is set
             threadPoolExecutor2.shutdown();
             Socket publicServices = new Socket("localhost", 8080);
-            // System.out.println(
-            //   LocalTime.now() +
-            //   " - Notifying the public services, which the consensus has been reached..."
-            // );
+            System.out.println(
+              LocalTime.now() +
+              " - Notifying the public services, which the consensus has been reached..."
+            );
             publicServices.getOutputStream().write("3".getBytes());
-            // System.out.println(value);
+            System.out.println(value);
 
             publicServices
               .getOutputStream()
@@ -234,11 +235,11 @@ public class Proposer {
             );
 
             if (result == 1) {
-              // System.out.println(LocalTime.now() + " - Services completed.");
+              System.out.println(LocalTime.now() + " - Services completed.");
             } else {
-              // System.out.println(
-              //   LocalTime.now() + " - Other proposal has been accepted."
-              // );
+              System.out.println(
+                LocalTime.now() + " - Other proposal has been accepted."
+              );
             }
 
             publicServices.getOutputStream().write("1".getBytes());
@@ -255,10 +256,10 @@ public class Proposer {
         threadPoolExecutor2.shutdown();
       }
       if (promiseKept < majority) {
-        // System.out.println(
-        //   LocalTime.now() +
-        //   " - Too many traitors, try again now.\n====================================================================\n"
-        // );
+        System.out.println(
+          LocalTime.now() +
+          " - Too many traitors, try again now.\n====================================================================\n"
+        );
         continue;
       }
     }
