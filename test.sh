@@ -33,20 +33,8 @@ for j in {1..6}; do
     done
     process_id=0
     if test $j -gt 1; then
-        # echo okey &
-        # if ./java Proposer $(expr $j \* 50) & | grep -q 'completed';
-        # then
-        #     echo 'One round finished'.
-        #     fi
-        echo "Opening Proposer"
-        Output = $(java Proposer $(expr $j \* 50) &)
-        echo "Proposer started"
-        process_id=$!
-        echo $Output
+        java Proposer $(expr $j \* 50)
+        echo "One round finished."
     fi
-    if test $process_id -gt 0; then
-        wait $process_id
-    fi
-    echo "One round finished."
     sleep 3
 done
