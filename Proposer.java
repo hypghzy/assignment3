@@ -32,13 +32,13 @@ public class Proposer {
 
     // What until the time
     LocalTime current = LocalTime.now();
-    System.out.println(current);
+    // System.out.println(current);
     LocalTime until = LocalTime.parse(
       args[1],
       DateTimeFormatter.ofPattern("HH:mm:ss.SSS")
     );
     long timeGap = ChronoUnit.MILLIS.between(current, until);
-    System.out.println(timeGap);
+    // System.out.println(timeGap);
     try {
       TimeUnit.MILLISECONDS.sleep(timeGap);
     } catch (Exception e) {
@@ -101,9 +101,9 @@ public class Proposer {
         // );
         publicServices.getOutputStream().write("2".getBytes());
         publicServices.getOutputStream().flush();
-        publicServices.getInputStream().read(byteBuffer1);
+        publicServices.getInputStream().read(byteBuffer4);
         int acceptorListNum = Integer.parseInt(
-          new String(byteBuffer1, StandardCharsets.UTF_8)
+          new String(byteBuffer4, StandardCharsets.UTF_8)
         );
         // System.out.printf(
         //   LocalTime.now() + " - Total %d ports on the list.\n",

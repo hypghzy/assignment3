@@ -120,7 +120,7 @@ public class PublicServices {
 
               server
                 .getOutputStream()
-                .write(Integer.toString(numAcceptor).getBytes());
+                .write(String.format("%04d", numAcceptor).getBytes());
               server.getOutputStream().write(portList.getBytes());
               server.getOutputStream().flush();
             } else if (request == 3) {
