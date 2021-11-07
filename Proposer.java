@@ -141,7 +141,20 @@ public class Proposer {
       Iterator<Integer> portsIterator = results.keySet().iterator();
 
       while (successfulConnection < acceptorNum && portsIterator.hasNext()) {
-        threadPoolExecutor.execute(new Operation_Prepare(portsIterator.next()));
+        try {
+          threadPoolExecutor.execute(
+            new Operation_Prepare(portsIterator.next())
+          );
+        } catch (Exception e) {
+          System.err.println(
+            "The queue is full, stop for asking for 2 seconds."
+          );
+          try {
+            TimeUnit.SECONDS.sleep(2);
+          } catch (Exception f) {
+            System.err.println(f);
+          }
+        }
         // try {
         //   TimeUnit.SECONDS.sleep(1);
         // } catch (Exception e) {
@@ -198,7 +211,18 @@ public class Proposer {
       while (portsIterator.hasNext()) {
         Integer portUsing = portsIterator.next();
         if (results.get(portUsing)) {
-          threadPoolExecutor2.execute(new Operation_Propose(portUsing));
+          try {
+            threadPoolExecutor2.execute(new Operation_Propose(portUsing));
+          } catch (Exception e) {
+            System.err.println(
+              "The queue is full, stop for asking for 2 seconds."
+            );
+            try {
+              TimeUnit.SECONDS.sleep(2);
+            } catch (Exception f) {
+              System.err.println(f);
+            }
+          }
           // try {
           //   TimeUnit.SECONDS.sleep(1);
           // } catch (Exception e) {
