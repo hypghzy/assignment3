@@ -44,7 +44,6 @@ for noUse in {1..10}; do
             esac
             # echo Acceptor $n
         done
-        process_id=0
         if test $j -gt 1; then
             java Proposer $(expr $j \* 50)
             echo "One round finished."
