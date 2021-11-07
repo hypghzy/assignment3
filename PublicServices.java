@@ -26,7 +26,7 @@ public class PublicServices {
   static int numAcceptor = 0;
   static int port = 8080;
   static String portList = "";
-  static boolean consensusReached = false;
+  static boolean consensusReached = true;
 
   public static void main(String[] args) {
     // Every proposer using one incrementing value as their propose ID
@@ -87,30 +87,33 @@ public class PublicServices {
               ++port;
               ++numAcceptor;
             } else if (request == 1) {
+              // if (consensusReached) {
+              // System.out.println(
+              //   LocalTime.now() +
+              //   " - Consensus reached, no more Id will be granted."
+              // );
+              // Send the number and wait for reply
+              //   server.getOutputStream().write("0000".getBytes());
+              //   server.getOutputStream().flush();
+              // } else {
+              // System.out.println(
+              //   LocalTime.now() +
+              //   " - Request received, granting id " +
+              //   proposeId +
+              //   " to proposer."
+              // );
               if (consensusReached) {
-                // System.out.println(
-                //   LocalTime.now() +
-                //   " - Consensus reached, no more Id will be granted."
-                // );
-                // Send the number and wait for reply
-                server.getOutputStream().write("0000".getBytes());
-                server.getOutputStream().flush();
-              } else {
-                // System.out.println(
-                //   LocalTime.now() +
-                //   " - Request received, granting id " +
-                //   proposeId +
-                //   " to proposer."
-                // );
                 startTimestamp = new Timestamp(System.currentTimeMillis());
-
-                // Send the number and wait for reply
-                server
-                  .getOutputStream()
-                  .write(String.format("%04d", proposeId).getBytes());
-                server.getOutputStream().flush();
-                ++proposeId;
+                consensusReached = false;
               }
+
+              // Send the number and wait for reply
+              server
+                .getOutputStream()
+                .write(String.format("%04d", proposeId).getBytes());
+              server.getOutputStream().flush();
+              ++proposeId;
+              // }
             } else if (request == 2) {
               // System.out.println(
               //   LocalTime.now() +
@@ -157,7 +160,7 @@ public class PublicServices {
                   "\n",
                   StandardOpenOption.APPEND
                 );
-                // consensusReached = true;
+                consensusReached = true;
               }
             }
 
