@@ -9,6 +9,7 @@
 
 #!/bin/bash
 
+javac *.java
 echo "Start testing"
 for noUse in {1..10}; do
     java PublicServices &
