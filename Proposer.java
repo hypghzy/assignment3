@@ -132,9 +132,9 @@ public class Proposer {
       }
 
       ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
-        10,
-        10,
-        10,
+        50,
+        50,
+        12,
         TimeUnit.SECONDS,
         new ArrayBlockingQueue<>(500)
       );
@@ -185,11 +185,11 @@ public class Proposer {
       System.out.println("\n====== Proposing ======");
 
       ThreadPoolExecutor threadPoolExecutor2 = new ThreadPoolExecutor(
-        10,
-        10,
-        10,
+        50,
+        50,
+        12,
         TimeUnit.SECONDS,
-        new ArrayBlockingQueue<>(50)
+        new ArrayBlockingQueue<>(500)
       );
 
       portsIterator = results.keySet().iterator();
