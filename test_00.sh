@@ -14,7 +14,7 @@ echo "Start testing"
 for noUse in {1..10}; do
     java PublicServices &
 
-    for j in {1..6}; do
+    for j in {1..12}; do
         counter=0
         for n in {0..49}; do
             java Acceptor &

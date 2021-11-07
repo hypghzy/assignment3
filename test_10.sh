@@ -4,7 +4,7 @@
 # @Semester: 2
 # @Year: 2021
 # @Assignment Number: 3
-# @LastEditors: Yupeng Hou
+ # @LastEditors: Yupeng Hou
 ###
 
 #!/bin/bash
@@ -15,7 +15,7 @@ for noUse in {1..10}; do
     java PublicServices &
     timeArray=(-1 -1 -1 -1 -1)
 
-    for j in {1..6}; do
+    for j in {1..12}; do
         counter=0
         while true; do
             timestamp=$(date +%s%3N)
