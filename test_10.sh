@@ -12,12 +12,23 @@
 echo "Start testing"
 for noUse in {1..10}; do
     java PublicServices &
-    timeArray=(0 0 0 0 0)
+    timeArray=(-1 -1 -1 -1 -1)
 
     for j in {1..6}; do
-        for k in 1 2 3 4 5; do
+        counter=0
+        while true; do
             timestamp=$(date +%s%3N)
-            timeArray[$k]=$(expr $timestamp % 50)
+            timePoint=$(expr $timestamp % 50)
+            if test $counter -eq 5; then
+                break
+            fi
+
+            if [[ ! " ${timeArray[*]} " =~ " ${timePoint} " ]]; then
+                timeArray[$counter]=$timePoint
+                counter=$(expr $counter + 1)
+            else
+                continue
+            fi
         done
         for n in {0..49}; do
             case $n in

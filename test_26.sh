@@ -24,7 +24,7 @@ for noUse in {1..10}; do
                 break
             fi
 
-            if [[ " ${timeArray[*]} " =~ " ${timePoint} " ]]; then
+            if [[ ! " ${timeArray[*]} " =~ " ${timePoint} " ]]; then
                 timeArray[$counter]=$timePoint
                 counter=$(expr $counter + 1)
             else
