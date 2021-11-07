@@ -15,7 +15,7 @@ for noUse in {1..10}; do
     java PublicServices &
     timeArray=(-1 -1 -1 -1 -1)
 
-    for j in {1..12}; do
+    for j in {1..20}; do
         counter=0
         while true; do
             timestamp=$(date +%s%3N)

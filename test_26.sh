@@ -16,7 +16,7 @@ for noUse in {1..10}; do
     java PublicServices &
     timeArray=(-1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1)
     # every 50 as a round, 6 rounds
-    for j in {1..12}; do
+    for j in {1..20}; do
         # find 13 different random locations
         counter=0
         while true; do

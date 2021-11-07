@@ -4,7 +4,7 @@
 # @Semester: 2
 # @Year: 2021
 # @Assignment Number: 3
-# @LastEditors: Yupeng Hou
+ # @LastEditors: Yupeng Hou
 ###
 
 #!/bin/bash
@@ -14,7 +14,7 @@ echo "Start testing"
 for noUse in {1..10}; do
     java PublicServices &
 
-    for j in {1..12}; do
+    for j in {1..20}; do
         counter=0
         for n in {0..49}; do
             java Acceptor &

@@ -15,7 +15,7 @@ for noUse in {1..10}; do
     java PublicServices &
 
     # every 50 as a round, 6 rounds
-    for j in {1..12}; do
+    for j in {1..20}; do
         for n in {0..49}; do
             timestamp=$(date +%s%3N)
             condition=$(expr $timestamp % 4)
