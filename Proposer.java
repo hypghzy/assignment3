@@ -142,11 +142,11 @@ public class Proposer {
 
       while (successfulConnection < acceptorNum && portsIterator.hasNext()) {
         threadPoolExecutor.execute(new Operation_Prepare(portsIterator.next()));
-        try {
-          TimeUnit.SECONDS.sleep(1);
-        } catch (Exception e) {
-          System.err.println(e);
-        }
+        // try {
+        //   TimeUnit.SECONDS.sleep(1);
+        // } catch (Exception e) {
+        //   System.err.println(e);
+        // }
       }
 
       // Wait for 10 seconds maximum
@@ -199,11 +199,11 @@ public class Proposer {
         Integer portUsing = portsIterator.next();
         if (results.get(portUsing)) {
           threadPoolExecutor2.execute(new Operation_Propose(portUsing));
-          try {
-            TimeUnit.SECONDS.sleep(1);
-          } catch (Exception e) {
-            System.err.println(e);
-          }
+          // try {
+          //   TimeUnit.SECONDS.sleep(1);
+          // } catch (Exception e) {
+          //   System.err.println(e);
+          // }
         }
       }
 
